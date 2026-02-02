@@ -1,0 +1,20 @@
+{
+    "name": "Actualizador BCV > Odoo",
+    "short_name": "DolarBCV",
+    "start_url": "/sistemas/actualizadolar/index.php",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2196F3",
+    "icons": [
+        {
+            "src": "imagen/favicon/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "imagen/favicon/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
