@@ -35,13 +35,60 @@
             color: white;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
+
+        /* Mobile Optimizations */
+        @media only screen and (max-width: 600px) {
+            .header-bg {
+                padding: 10px 0; /* Narrower header */
+                margin-bottom: 10px;
+            }
+            .header-bg h4 {
+                font-size: 1.5rem; /* Smaller title */
+                margin: 0.5rem 0;
+            }
+            .header-bg p {
+                font-size: 0.9rem;
+                margin: 0;
+            }
+            .container {
+                width: 95%; /* More width for content */
+            }
+            table.highlight th, table.highlight td {
+                padding: 5px 2px; /* Compact table cells */
+                font-size: 0.85rem; /* Smaller table text */
+            }
+            .card .card-content {
+                padding: 10px; /* Reduce card padding */
+            }
+            .card-title {
+                margin-bottom: 5px !important; /* Reduce space after "Estado del Sistema" */
+                font-size: 1.2rem !important;
+            }
+            #status-loading {
+                padding: 10px !important; /* Reduce loading padding */
+            }
+            h5 {
+                font-size: 1.1rem; /* Smaller subtitles */
+                margin: 0.5rem 0; /* Tighten spacing */
+            }
+            .btn-large {
+                height: 40px;
+                line-height: 40px;
+                font-size: 0.9rem;
+            }
+            /* Ensure table fits */
+            .card-content table {
+                width: 100%;
+                display: table;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div class="header-bg center-align">
         <h4><i class="material-icons large-text">sync</i> Actualizador BCV > Odoo</h4>
-        <p>Sincronización automática de tasas de cambio</p>
+        <p>Sincronización automática de tasa de cambio</p>
     </div>
 
     <div class="container">
@@ -50,7 +97,6 @@
             <div class="col s12 m8 offset-m2">
                 <div class="card hoverable">
                     <div class="card-content">
-                        <span class="card-title center-align grey-text text-darken-4">Estado del Sistema</span>
                         
                         <div id="status-loading" class="center-align" style="padding: 20px;">
                              <div class="preloader-wrapper active">
@@ -66,7 +112,8 @@
                         <div id="status-content" style="display:none;">
                             <div class="row center-align">
                                 <div class="col s12">
-                                    <h5 class="blue-text">Tasa BCV: <span id="bcv-rate-display">--.--</span></h5>
+                                    <h5 class="blue-text" style="font-weight:bold; margin-bottom:5px;">Tasa Dólar BCV = Bs. <span id="bcv-rate-display">--.--</span></h5>
+                                    <p class="grey-text text-darken-1" style="margin-top:0; font-size: 1.1rem; font-weight: 500;" id="server-date-display">--/--/----</p>
                                 </div>
                             </div>
                             
@@ -117,6 +164,7 @@
             const statusMsg = document.getElementById('status-message');
             const tbody = document.getElementById('companies-table-body');
             const bcvDisplay = document.getElementById('bcv-rate-display');
+            const dateDisplay = document.getElementById('server-date-display');
             const log = document.getElementById('log-area');
 
             loading.style.display = 'block';
@@ -130,7 +178,9 @@
 
                 if(data.success && data.output && data.output.success) {
                     const info = data.output;
-                    bcvDisplay.innerText = info.bcv_rate;
+                    // Format rate with comma for display
+                    bcvDisplay.innerText = parseFloat(info.bcv_rate).toFixed(4).replace('.', ',');
+                    dateDisplay.innerText = info.server_date || '--/--/----';
                     
                     tbody.innerHTML = '';
                     

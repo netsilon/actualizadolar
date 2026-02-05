@@ -182,7 +182,8 @@ class OdooUpdater:
 
             return {
                 "success": True, 
-                "bcv_rate": bcv_rate, 
+                "bcv_rate": bcv_rate,
+                "server_date": datetime.now().strftime('%d/%m/%Y'),
                 "companies": current_status, 
                 "all_match": all_match
             }
